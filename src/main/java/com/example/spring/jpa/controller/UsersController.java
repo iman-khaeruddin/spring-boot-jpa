@@ -37,6 +37,43 @@ public class UsersController {
 
     }
 
+    /**
+     * Get all user data.
+     *
+     * @return list of {@link Users}
+     */
+    @GetMapping(value = "/get/all")
+    ResponseEntity<Iterable<Users>> gettAll() {
+
+        return new ResponseEntity<>(usersService.getAllUsers(), HttpStatus.OK);
+
+    }
+
+    /**
+     * Get user by ID.
+     *
+     * @return {@link Users}
+     */
+    @GetMapping(value = "/get/{id}")
+    ResponseEntity<Users> gettAll(@PathVariable("id") int id) {
+
+        return new ResponseEntity<>(usersService.getByUserID(id), HttpStatus.OK);
+
+    }
+
+    /**
+     * Edit user data.
+     *
+     * @param users
+     * @return {@link Users}
+     */
+    @PutMapping(value = "/edit")
+    ResponseEntity<Users> editUsers(@Valid @RequestBody Users users) {
+
+        return new ResponseEntity<>(usersService.editUsers(users), HttpStatus.OK);
+
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {

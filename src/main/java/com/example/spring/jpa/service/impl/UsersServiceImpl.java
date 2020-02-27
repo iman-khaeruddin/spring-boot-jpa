@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * @author Iman Khaeruddin
@@ -25,5 +26,46 @@ public class UsersServiceImpl implements UsersService {
 
         return usersDao.save(users);
 
+    }
+
+    @Override
+    public Iterable<Users> getAllUsers() {
+        return usersDao.findAll();
+    }
+
+    @Override
+    public Users getByUserID(int id) {
+
+        Users usr = new Users();
+
+        Optional<Users> users = usersDao.findById(id);
+
+        if (users.isPresent())
+            usr = users.get();
+
+        return usr;
+    }
+
+    @Override
+    @Transactional
+    public Users editUsers(Users users) {
+
+        Users userTemp = new Users();
+
+        Optional<Users> usr = usersDao.findById(users.getId());
+
+        //if entity already exist will update data and returned, if entity empty will return empty object
+        if (usr.isPresent()) {
+            userTemp = usr.get();
+
+            userTemp.setEmail(users.getEmail());
+            userTemp.setFirst_name(users.getFirst_name());
+            userTemp.setLast_name(users.getLast_name());
+            userTemp.setPhone(users.getPhone());
+
+            usersDao.save(userTemp);
+        }
+
+        return userTemp;
     }
 }
