@@ -74,6 +74,10 @@ public class UsersController {
 
     }
 
+    /**
+     * This will be invoked if request with not complete payload
+     *
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {

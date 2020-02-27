@@ -54,7 +54,7 @@ public class UsersServiceImpl implements UsersService {
 
         Optional<Users> usr = usersDao.findById(users.getId());
 
-        //if entity already exist will update data and returned, if entity empty will return empty object
+        //if user is already exist will update data and returned, if user is empty will return empty object
         if (usr.isPresent()) {
             userTemp = usr.get();
 
